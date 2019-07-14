@@ -1,3 +1,8 @@
+#collaborators
+rafiq.macronoob@gmail.com
+ilhdaf.macronoob@gmail.com
+firdauz.macronoob@gmail.com
+
 # e-invite
 guestbook and einvite
 virtualenv: pyeinvite
