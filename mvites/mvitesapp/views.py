@@ -10,3 +10,11 @@ def index(request):
     'title': 'MvitesApp: HomePage',
     }
     return render(request,'mvitesapp/index.html',context)
+
+def excel(request): 
+
+    context = {
+
+    'title': 'MvitesApp: Excel',
+    }
+    return render(request,'mvitesapp/excel.html',context)
