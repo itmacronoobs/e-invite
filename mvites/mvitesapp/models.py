@@ -28,7 +28,7 @@ class Customer(models.Model):
     groomcontactname2 = models.CharField(max_length=200,blank=True)
     groomcontactno = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
     groomcontactno2 = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
-    eventdatetime = models.DateTimeField(default=datetime.now, blank=True)
+    eventdatetime = models.CharField(max_length=200,blank=True)
     
     no_of_guests_attending = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(2000)])
 
@@ -36,8 +36,8 @@ class Customer(models.Model):
     bridecontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
     groomcontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
     
-    eventstarttime = models.DateTimeField(default=datetime.now, blank=True)
-    eventendtime = models.DateTimeField(default=datetime.now, blank=True)
+    eventstarttime = models.CharField(max_length=200,blank=True)
+    eventendtime = models.CharField(max_length=200,blank=True)
     
     def __str__(self):
         return self.customeremail
