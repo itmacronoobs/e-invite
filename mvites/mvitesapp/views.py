@@ -4,6 +4,7 @@ from .models import Customer, Group, Itinerary, Wish, Guestbook, Rsvp
 from .forms import UploadFileForm
 import xlrd
 from django.http import HttpResponseRedirect
+from django.db.models import Avg, Count, Min, Sum
 
 # Create your views here.
 def index(request): 
@@ -119,14 +120,29 @@ def excel(request):
     return render(request, 'mvitesapp/excel.html', {'form': form})
 
 def guestbook(request): 
-    
+    group = Group.objects.all().annotate(total = Sum('guestbook__no_of_guests_attending'),total_invite = Sum('guestbook__no_of_guests_invited'))
     customer = Customer.objects.all().order_by('-id')
     guestbook = Guestbook.objects.all().order_by('-id')
+    guest_count = Guestbook.objects.all().count()
+    guest_attending = Guestbook.objects.aggregate(total = Sum('no_of_guests_attending'))
+    guest_invited = Guestbook.objects.aggregate(total = Sum('no_of_guests_invited'))
+    rsvp_yes = Guestbook.objects.filter(rsvp__status='YES').count()
+    rsvp_no = Guestbook.objects.filter(rsvp__status='NO').count()
+    rsvp_maybe = Guestbook.objects.filter(rsvp__status='MAYBE').count()
+    rsvp_unconfirmed = Guestbook.objects.filter(rsvp__status='UNCONFIRMED').count()
     
     context = {
         'title': 'MvitesApp: Guestbook',
 		'guestbook': guestbook,
-        'customer': customer
+        'customer': customer,
+        'guest_count':  guest_count,
+        'rsvp_yes': rsvp_yes,
+        'rsvp_no': rsvp_no,
+        'rsvp_maybe': rsvp_maybe,
+        'rsvp_unconfirmed': rsvp_unconfirmed,
+        'guest_attending' : guest_attending,
+        'guest_invited' : guest_invited,
+        'group' : group
 	}
 	
     return render(request,'mvitesapp/guestbook.html',context)
