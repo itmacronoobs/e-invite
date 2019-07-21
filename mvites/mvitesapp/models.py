@@ -22,19 +22,19 @@ class Customer(models.Model):
     
     bridecontactname = models.CharField(max_length=200,blank=True)
     bridecontactname2 = models.CharField(max_length=200,blank=True)
-    bridecontactno = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
-    bridecontactno2 = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
+    bridecontactno = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
+    bridecontactno2 = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
     groomcontactname = models.CharField(max_length=200,blank=True)
     groomcontactname2 = models.CharField(max_length=200,blank=True)
-    groomcontactno = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
-    groomcontactno2 = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
+    groomcontactno = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
+    groomcontactno2 = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
     eventdatetime = models.CharField(max_length=200,blank=True)
     
     no_of_guests_attending = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(2000)])
 
     customeremail = models.EmailField(max_length=70,blank=True, null= True, unique= True)
-    bridecontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
-    groomcontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)],blank=True)
+    bridecontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
+    groomcontact_number = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(9999999999)],blank=True)
     
     eventstarttime = models.CharField(max_length=200,blank=True)
     eventendtime = models.CharField(max_length=200,blank=True)
@@ -47,8 +47,8 @@ class Customer(models.Model):
 
 class Itinerary(models.Model):
     title = models.CharField(max_length=200,blank=True)
-    starttime = models.DateTimeField(default=datetime.now, blank=True)
-    endtime = models.DateTimeField(default=datetime.now, blank=True)
+    starttime = models.CharField(max_length=200,blank=True)
+    endtime = models.CharField(max_length=200,blank=True)
     body = models.TextField()
  
     def __str__(self):

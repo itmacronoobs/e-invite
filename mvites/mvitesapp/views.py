@@ -22,39 +22,111 @@ def excel(request):
             book = xlrd.open_workbook(file_contents=input_excel.read())
             xlsheet = book.sheet_by_index(0)
 
-            customer = Customer()
+            if not request.POST["update"]:
+            
+                customer = Customer()
 
-            customer.bride  = xlsheet.cell_value(rowx=6,colx=1)
-            customer.bridefullname  = xlsheet.cell_value(rowx=7,colx=1)
-            customer.groom  = xlsheet.cell_value(rowx=8,colx=1)
-            customer.groomfullname  = xlsheet.cell_value(rowx=9,colx=1)
-            customer.addressline1  = xlsheet.cell_value(rowx=10,colx=1)
-            customer.addressline2  = xlsheet.cell_value(rowx=11,colx=1)
-            customer.addressline3  = xlsheet.cell_value(rowx=12,colx=1)
-            customer.postalcode  = xlsheet.cell_value(rowx=13,colx=1)
-            customer.host1  = xlsheet.cell_value(rowx=14,colx=1)
-            customer.host2  = xlsheet.cell_value(rowx=15,colx=1)
-            customer.host3  = xlsheet.cell_value(rowx=16,colx=1)
-            customer.host4  = xlsheet.cell_value(rowx=17,colx=1)
-            customer.bridecontactname  = xlsheet.cell_value(rowx=18,colx=1)
-            customer.bridecontactname2  = xlsheet.cell_value(rowx=19,colx=1)
-            customer.bridecontactno  = xlsheet.cell_value(rowx=20,colx=1)
-            customer.bridecontactno2  = xlsheet.cell_value(rowx=21,colx=1)
-            customer.groomcontactname  = xlsheet.cell_value(rowx=22,colx=1)
-            customer.groomcontactname2  = xlsheet.cell_value(rowx=23,colx=1)
-            customer.groomcontactno  = xlsheet.cell_value(rowx=24,colx=1)
-            customer.groomcontactno2  = xlsheet.cell_value(rowx=25,colx=1)
-            customer.eventdatetime  = xlsheet.cell_value(rowx=26,colx=1)
-            customer.no_of_guests_attending  = xlsheet.cell_value(rowx=27,colx=1)
-            customer.customeremail  = xlsheet.cell_value(rowx=28,colx=1)
-            customer.bridecontact_number  = xlsheet.cell_value(rowx=29,colx=1)
-            customer.groomcontact_number  = xlsheet.cell_value(rowx=30,colx=1)
-            customer.eventstarttime  = xlsheet.cell_value(rowx=31,colx=1)
-            customer.eventendtime  = xlsheet.cell_value(rowx=32,colx=1)
+                customer.bride  = xlsheet.cell_value(rowx=6,colx=1)
+                customer.bridefullname  = xlsheet.cell_value(rowx=7,colx=1)
+                customer.groom  = xlsheet.cell_value(rowx=8,colx=1)
+                customer.groomfullname  = xlsheet.cell_value(rowx=9,colx=1)
+                customer.addressline1  = xlsheet.cell_value(rowx=10,colx=1)
+                customer.addressline2  = xlsheet.cell_value(rowx=11,colx=1)
+                customer.addressline3  = xlsheet.cell_value(rowx=12,colx=1)
+                customer.postalcode  = xlsheet.cell_value(rowx=13,colx=1)
+                customer.host1  = xlsheet.cell_value(rowx=14,colx=1)
+                customer.host2  = xlsheet.cell_value(rowx=15,colx=1)
+                customer.host3  = xlsheet.cell_value(rowx=16,colx=1)
+                customer.host4  = xlsheet.cell_value(rowx=17,colx=1)
+                customer.bridecontactname  = xlsheet.cell_value(rowx=18,colx=1)
+                customer.bridecontactname2  = xlsheet.cell_value(rowx=19,colx=1)
+                customer.bridecontactno  = xlsheet.cell_value(rowx=20,colx=1)
+                customer.bridecontactno2  = xlsheet.cell_value(rowx=21,colx=1)
+                customer.groomcontactname  = xlsheet.cell_value(rowx=22,colx=1)
+                customer.groomcontactname2  = xlsheet.cell_value(rowx=23,colx=1)
+                customer.groomcontactno  = xlsheet.cell_value(rowx=24,colx=1)
+                customer.groomcontactno2  = xlsheet.cell_value(rowx=25,colx=1)
+                customer.eventdatetime  = xlsheet.cell_value(rowx=26,colx=1)
+                customer.no_of_guests_attending  = xlsheet.cell_value(rowx=27,colx=1)
+                customer.customeremail  = xlsheet.cell_value(rowx=28,colx=1)
+                customer.bridecontact_number  = xlsheet.cell_value(rowx=29,colx=1)
+                customer.groomcontact_number  = xlsheet.cell_value(rowx=30,colx=1)
+                customer.eventstarttime  = xlsheet.cell_value(rowx=31,colx=1)
+                customer.eventendtime  = xlsheet.cell_value(rowx=32,colx=1)
+
+                customer.save()
+    
+                for x in range(35,48):
+                    if xlsheet.cell_value(rowx = x,colx=1) != "":
+                        itinerary = Itinerary()
+                        itinerary.starttime = xlsheet.cell_value(rowx=x,colx=1)
+                        itinerary.endtime = xlsheet.cell_value(rowx=x,colx=2)
+                        itinerary.title = xlsheet.cell_value(rowx=x,colx=3)
+                        itinerary.body = xlsheet.cell_value(rowx=x,colx=4)
+                        itinerary.save()
+                
+                
+                rsvp = Rsvp()
+                rsvp.status = "YES"
+                rsvp.save()
+
+                rsvp = Rsvp()
+                rsvp.status = "NO"
+                rsvp.save()
+
+                rsvp = Rsvp()
+                rsvp.status = "MAYBE"
+                rsvp.save()
+
+                rsvp = Rsvp()
+                rsvp.status = "UNCONFIRMED"
+                rsvp.save()
+                
+                x = 49
+                while x >= 49:
+                    if xlsheet.cell_value(rowx=x,colx=7) != 0.0:
+                        group = Group()
+                        group.name =  xlsheet.cell_value(rowx=x,colx=7)
+                        group.save()
+                        x = x + 1
+
+                    else:
+                        x = 48
+
+            
+            x = 49
+            while x >= 49:
+                if xlsheet.cell_value(rowx=x,colx=0) != "":
+                    
+                    guestbook = Guestbook()
+                    guestbook.name = xlsheet.cell_value(rowx=x,colx=0)
+                    guestbook.no_of_guests_invited = xlsheet.cell_value(rowx=x,colx=1)
+                    guestbook.no_of_guests_attending = xlsheet.cell_value(rowx=x,colx=2)
+                    guestbook.email = xlsheet.cell_value(rowx=x,colx=3)
+                    guestbook.contact_number = xlsheet.cell_value(rowx=x,colx=4)
+                    guestbook.rsvp = Rsvp.objects.get(status=xlsheet.cell_value(rowx=x,colx=5))
+                    guestbook.group = Group.objects.get(name=xlsheet.cell_value(rowx=x,colx=6))
+                    guestbook.save()
+                    x = x + 1
+                else:
+                    x = 48
 
 
-            customer.save()
+
             return HttpResponseRedirect('/admin/')
     else:
         form = UploadFileForm()
     return render(request, 'mvitesapp/excel.html', {'form': form})
+
+def guestbook(request): 
+    
+    customer = Customer.objects.all().order_by('-id')
+    guestbook = Guestbook.objects.all().order_by('-id')
+    
+    context = {
+        'title': 'MvitesApp: Guestbook',
+		'guestbook': guestbook,
+        'customer': customer
+	}
+	
+    return render(request,'mvitesapp/guestbook.html',context)

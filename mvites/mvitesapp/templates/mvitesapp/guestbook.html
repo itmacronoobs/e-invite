@@ -1,0 +1,46 @@
+{% extends 'mvitesapp/layout.html' %}
+{% load static %}s
+{% block content %}  
+<div class="divider"></div>
+  <div class="section">
+    {% for customer in customer %}
+    <h1>Welcome {{customer.bride}}</h1>
+    {% endfor %}
+    <p>My GuestBook</p>
+  </div>
+
+<table class="centered">
+    <thead>
+      <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Contact number</th>
+          <th>No. of Attendees</th>
+          <th>No. of Invites given</th>
+          <th>RSVP status</th>
+          <th>Group</th>
+          <th>E-invite link</th>
+          <th>Send E-invite</th>
+          <th>Checklist</th>
+      </tr>
+    </thead>
+    {% for guest in guestbook %}
+    <tbody>
+        <tr>
+            <td>{{guest.name}}</td>
+            <td>{{guest.email}}</td>
+            <td>{{guest.contact_number}}</td>
+            <td>{{guest.no_of_guests_attending}}</td>
+            <td>{{guest.no_of_guests_invited}}</td>
+            <td>{{guest.rsvp}}</td>
+            <td>{{guest.group}}</td>
+            <td>E-invite link </td>
+            <td> Send E-invite </td>
+            <td>Checklist</td>
+        </tr>
+    {% endfor%}
+
+    </tbody>
+</table>
+    
+{% endblock %}
