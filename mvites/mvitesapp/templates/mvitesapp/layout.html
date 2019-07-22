@@ -20,9 +20,36 @@
     <title>{{title}}</title>
 </head>
 <body>
-<h3>mvites guestbook</h3>
-<nav><ul><li><a href="{% url 'excel' %}">Admin</a></li></ul></nav>
-<hr>  
+    <nav>
+        <div class="nav-wrapper">
+                    <a href="#" class="brand-logo center">GuestBook</a>
+                    <ul id="nav-mobile" class="left">
+                    <li><a data-target="slide-out" class="sidenav-trigger show-on-large" href="#"><i class="material-icons">menu</i></a></li>
+                    </ul>
+        </div> 
+    </nav>
+
+    <ul id="slide-out" class="sidenav">
+        <li><div class="user-view">
+        <div class="background">
+            <img src="{%static "img/office.jpg" %}">
+        </div>
+        {% for customer in customer %}
+        <a href="#user"><img class="circle" width="150px" height="150px" src="{%static "img/firsuzy.jif" %}"></a>
+        <a href="#name"><span class="white-text name">
+                {{customer.bride}} & {{customer.groom}}
+                </span></a>
+        <a href="#email"><span class="white-text email">{{customer.customeremail}}</span></a>
+        </div></li>
+        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+        <li><a href="#!">Second Link</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Subheader</a></li>
+        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        {% endfor %}
+    </ul>
+    
+  
 {% block content %}
 
 
@@ -30,7 +57,7 @@
 
 
 {% endblock %}
-<hr>
+
 <footer>
     Footer
 </footer>
