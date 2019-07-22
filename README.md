@@ -4,18 +4,28 @@ ilhdaf.macronoob@gmail.com
 firdauz.macronoob@gmail.com
 
 # e-invite
-guestbook and einvite
-virtualenv: pyeinvite
-requirements: django, mysql, xlrd
-reference: 
-https://cloud.google.com/python/django/appengine #google tutorial
-gcloud auth application-default login
-gcloud services enable sqladmin
-instance id: mvites-instance
-pw: mvites12345
-connectionName: mvites-project:asia-southeast1:mvites-instance
-cloud_sql_proxy.exe -instances="mvites-project:asia-southeast1:mvites-instance"=tcp:3306
-Python manage.py createsuperuser --username=admin --email=it.macronoob@gmail.com pw:mvites12345
+- virtualenv: pyeinvite or pymvites
+- requirements: django, mysql, xlrd
+- reference: 
+- https://cloud.google.com/python/django/appengine #google tutorial
+- gcloud auth application-default login
+- gcloud services enable sqladmin
+- instance id: mvites-instance
+- pw: mvites12345
+- connectionName: mvites-project:asia-southeast1:mvites-instance
+- cloud_sql_proxy.exe -instances="mvites-project:asia-southeast1:mvites-instance"=tcp:3306
+- Python manage.py createsuperuser --username=admin --email=it.macronoob@gmail.com pw:mvites12345
+- guestbook and einvite
+
+# cloud sql proxy for MACOS
+./cloud_sql_proxy -instances="mvites-project:asia-southeast1:mvites-instance"=tcp:3306
+
+# how to initialize new computer to do project
+- Add email to GCP Project IAM as Owner
+- Run gcloud init
+- Choose the mvites project
+- gcloud services enable sqladmin (at CMD Prompt)
+- run google sql proxy
 
 Settings.py:
 
