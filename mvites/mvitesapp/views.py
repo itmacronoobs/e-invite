@@ -130,8 +130,11 @@ def guestbook(request):
     rsvp_no = Guestbook.objects.filter(rsvp__status='NO').count()
     rsvp_maybe = Guestbook.objects.filter(rsvp__status='MAYBE').count()
     rsvp_unconfirmed = Guestbook.objects.filter(rsvp__status='UNCONFIRMED').count()
+
+    total_responded = guest_count - rsvp_unconfirmed
     
     context = {
+        'total_responded': total_responded ,
         'title': 'MvitesApp: Guestbook',
 		'guestbook': guestbook,
         'customer': customer,
