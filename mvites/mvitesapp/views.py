@@ -8,9 +8,9 @@ from django.db.models import Avg, Count, Min, Sum
 
 # Create your views here.
 def index(request): 
-
+    customer = Customer.objects.all().order_by('-id')
     context = {
-
+    'customer': customer,
     'title': 'MvitesApp: HomePage',
     }
     return render(request,'mvitesapp/index.html',context)
