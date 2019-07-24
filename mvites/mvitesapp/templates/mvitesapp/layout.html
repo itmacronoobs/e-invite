@@ -43,11 +43,16 @@
                 </span></a>
         <a href="#email"><span class="white-text email">{{customer.customeremail}}</span></a>
         </div></li>
-        <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
-        <li><a href="#!">Second Link</a></li>
+        <li><a class="subheader">Admin</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">account_circle
+            </i>Login</a></li>
+        <li><a class="subheader">View</a></li>
+        <li><a class="waves-effect" href="{% url 'index'%}"><i class="material-icons">home</i>Cover Page</a></li>
+        <li><a class="waves-effect" href="{%  url 'guestbook'%}"><i class="material-icons">art_track</i>Guestbook</a></li>
+        <li><a class="waves-effect" href="#!"><i class="material-icons">cloud</i>Wishbook</a></li>
         <li><div class="divider"></div></li>
-        <li><a class="subheader">Subheader</a></li>
-        <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+        <li><a class="subheader">m-vitesapp by mnoobs.com</a></li>
+        <li><a class="waves-effect" href="#!">Get your own Mvites!<i class="material-icons">add_shopping_cart</i></a></li>
         {% endfor %}
     </ul>
     
