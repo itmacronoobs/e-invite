@@ -124,6 +124,8 @@ def guestbook(request):
     customer = Customer.objects.all().order_by('-id')
     guestbook = Guestbook.objects.all().order_by('-id')
     guest_count = Guestbook.objects.all().count()
+    guest_attending1 = list(Guestbook.objects.aggregate(total = Sum('no_of_guests_attending')).values())[0]
+    guest_invited1 = list(Guestbook.objects.aggregate(total = Sum('no_of_guests_invited')).values())[0]
     guest_attending = Guestbook.objects.aggregate(total = Sum('no_of_guests_attending'))
     guest_invited = Guestbook.objects.aggregate(total = Sum('no_of_guests_invited'))
     rsvp_yes = Guestbook.objects.filter(rsvp__status='YES').count()
@@ -132,7 +134,17 @@ def guestbook(request):
     rsvp_unconfirmed = Guestbook.objects.filter(rsvp__status='UNCONFIRMED').count()
 
     total_responded = guest_count - rsvp_unconfirmed
+    rsvp_maybeplusunconfirmed = rsvp_maybe + rsvp_unconfirmed
+
+    bar_totalinvites = str(round(total_responded/guest_count,3)*100) + "%"
+    bar_totalresponded = str(round(total_responded/guest_count,3)*100) + "%"
+    bar_yes = str(round(rsvp_yes/guest_count,3)*100) + "%"
+    bar_no = str(round(rsvp_no/guest_count,3)*100) + "%"
+    bar_maybe = str(round(rsvp_maybe/guest_count,3)*100) + "%"
+    bar_unconfirmed = str(round(rsvp_unconfirmed/guest_count,3)*100+round(rsvp_maybe/guest_count,3)*100) + "%"
     
+    bar_attending = str(round(guest_attending1/guest_invited1,3)*100) + "%"
+
     context = {
         'total_responded': total_responded ,
         'title': 'MvitesApp: Guestbook',
@@ -145,7 +157,15 @@ def guestbook(request):
         'rsvp_unconfirmed': rsvp_unconfirmed,
         'guest_attending' : guest_attending,
         'guest_invited' : guest_invited,
-        'group' : group
+        'group' : group,
+        'rsvp_maybeplusunconfirmed' : rsvp_maybeplusunconfirmed,
+        'bar_totalinvites' : bar_totalinvites,
+        'bar_totalresponded' : bar_totalresponded,
+        'bar_yes' : bar_yes,
+        'bar_no' : bar_no,
+        'bar_maybe' : bar_maybe,
+        'bar_unconfirmed' : bar_unconfirmed,
+        'bar_attending' : bar_attending
 	}
 	
     return render(request,'mvitesapp/guestbook.html',context)
