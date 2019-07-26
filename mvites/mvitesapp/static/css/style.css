@@ -59,3 +59,25 @@
     height: 100px;
     width: 100px;
   }
+
+  #dashfonts {
+    font-family: 'Playfair Display SC', serif;
+    font-size: 20px;
+  }
+
+ 
+  #guestdetailsfonts td{
+
+    font-family: 'Montserrat', sans-serif !important; 
+    font-size: 13px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    }
+
+    #guestheaderfonts th{
+
+      font-family: 'Playfair Display SC', serif !important; 
+      font-size: 15px !important;
+      text-align: center !important;
+      vertical-align: middle !important;
+      }

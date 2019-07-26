@@ -2,7 +2,7 @@
 {% load static %}s
 {% block content %}  
 
-
+<div style = "width: 80%" class="center-block">
         <div style="margin-left:12px;" class="section">
 
                 <span style="font-family: 'Grand Hotel', cursive;font-size:50px">My GuestBook</span>
@@ -26,7 +26,7 @@
                           <p>Welcome, {{customer.bride}} & {{customer.groom}}.</p>
                             {% endfor %}
                         </div>
-                        <div class="card-action blue-grey darken-1 " style="max-height:25%;">
+                        <div class="card-action   " style="max-height:25%;">
                           <div class="row">
                               <div class="col l6 s12">
                                 <a class="valign-wrapper"><i class="material-icons medium left">insert_chart</i>Total Invites: {{guest_count}}</a> 
@@ -49,9 +49,9 @@
     <div class="col s12 m6 l6" style="height:100%;">
             <div class="row no-pad-bot" style="height:50%;">
                     <div class="col l6 s12"style="min-height:95%;height:95%;">
-                            <div class="card blue-grey darken-1 valign-wrapper center"style="min-height:95%;height:95%;" >
-                                    <div class="card-content white-text">
-                                        <div class="valign-wrapper"><i class="material-icons large left">check</i><span style="font-size:30px;">Total Yes: {{rsvp_yes}}</span> </div>
+                            <div class="card   valign-wrapper center"style="min-height:95%;height:95%;" >
+                                    <div class="card-content black-text">
+                                        <div class="valign-wrapper"><i class="material-icons large left">check</i><span id="dashfonts">Yes: {{rsvp_yes}}</span> </div>
                                         <div class="progress">
                                                 <div class="determinate light-green accent-2" style="width: {{bar_yes}}"></div>
                                         </div>
@@ -67,9 +67,9 @@
                             </div>
                     </div>
                     <div class="col l6 s12"style="min-height:95%;height:95%;;">
-                            <div class="card blue-grey darken-1 valign-wrapper center"style="min-height:95%;height:95%;" >
-                                    <div class="card-content white-text center-block">
-                                            <div class="valign-wrapper"><i class="material-icons large left">close</i><span style="font-size:30px;">Total No: {{rsvp_no}}</span> </div> 
+                            <div class="card   valign-wrapper center"style="min-height:95%;height:95%;" >
+                                    <div class="card-content black-text center-block">
+                                            <div class="valign-wrapper"><i class="material-icons large left">close</i><span id="dashfonts">No: {{rsvp_no}}</span> </div> 
                                             <div class="progress">
                                                     <div class="determinate red" style="width: {{bar_no}}"></div>
                                             </div>
@@ -91,9 +91,9 @@
                 
                 <div class="row no-pad-bot" style="height:50%;">
                         <div class="col l6 s12" style="min-height:95%;height:95%;" >
-                                <div class="card blue-grey darken-1 valign-wrapper" style="min-height:95%;height:95%;" >
-                                        <div class="card-content white-text">
-                                                <div class="valign-wrapper"><i class="material-icons large left">warning</i><span style="font-size:30px;"> Maybe: {{rsvp_maybe}}<br> No Reply: {{ rsvp_unconfirmed }}</span> </div> 
+                                <div class="card   valign-wrapper" style="min-height:95%;height:95%;" >
+                                        <div class="card-content black-text">
+                                                <div class="valign-wrapper"><i class="material-icons large left">warning</i><span id="dashfonts">Maybe: {{rsvp_maybe}}<br> No Reply: {{ rsvp_unconfirmed }}</span> </div> 
                                                 <div class="progress">
                                                         <div class="determinate orange" style="width: {{bar_unconfirmed}}"></div>
                                                         <div class="determinate red" style="width: {{ bar_maybe }}"></div>
@@ -110,10 +110,10 @@
                                 </div>
                         </div>
                         <div class="col l6 s12" style="min-height:95%;height:95%;">
-                                <div class="card blue-grey darken-1 valign-wrapper " style="min-height:95%;height:95%;">
-                                        <div class="card-content white-text center-block">
+                                <div class="card   valign-wrapper " style="min-height:95%;height:95%;">
+                                        <div class="card-content black-text center-block">
                                                 <div class="valign-wrapper"><i class="material-icons large left">people</i>
-                                                    <span style="font-size:20px;">Total Attending: <br>{{ guest_attending.total }} / {{guest_invited.total}}</span>  
+                                                    <span id="dashfonts">Total Attending: <br>{{ guest_attending.total }} / {{guest_invited.total}}</span>  
                                                 </div> 
                                                 <div class="progress white">
                                                         <div class="determinate black" style="width: {{bar_attending}}"></div>
@@ -135,7 +135,7 @@
 </div>
 
 
-<div style="width:90%;height:20vh;z-index:90" class="container">
+<div style="height:20vh;z-index:90; width:98%"class="centered center-block">
     <ul class="collapsible">
         {% for group in group %}
         {% if group.id == 1 %}
@@ -145,17 +145,15 @@
         {%endif%}
             <div class="collapsible-header"><i class="material-icons">filter_drama</i> {{group.name}}: {{group.total}}/{{group.total_invite}}</div>
             <div class="collapsible-body">
-                <table class="centered">
+                <table id="guestdetailsfonts">
                     <thead>
-                    <tr>
+                    <tr id="guestheaderfonts">
                         <th>Name</th>
                         <th>Email</th>
                         <th>Contact number</th>
                         <th>No. of Attendees</th>
                         <th>No. of Invites given</th>
                         <th>RSVP status</th>
-                        <th>Group</th>
-                        <th>E-invite link</th>
                         <th>Send E-invite</th>
                         <th>Checklist</th>
                     </tr>
@@ -163,15 +161,13 @@
                     <tbody>
                     {% for guest in guestbook %}
                     {% if guest.group == group %}
-                        <tr>
+                        <tr id="guestdetailsfonts">
                             <td>{{guest.name}}</td>
                             <td>{{guest.email}}</td>
                             <td>{{guest.contact_number}}</td>
                             <td>{{guest.no_of_guests_attending}}</td>
                             <td>{{guest.no_of_guests_invited}}</td>
                             <td>{{guest.rsvp}}</td>
-                            <td>{{guest.group}}</td>
-                            <td>E-invite link </td>
                             <td> Send E-invite </td>
                             <td>Checklist</td>
                         </tr>
@@ -184,5 +180,7 @@
         </li>
         {% endfor%}
     </ul>
+</div>
+
 </div>
 {% endblock %}
