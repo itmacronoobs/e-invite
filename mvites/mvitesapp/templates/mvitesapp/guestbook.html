@@ -250,7 +250,7 @@
                             <td>{{guest.contact_number}}</td>
                             <td>{{guest.no_of_guests_attending}}</td>
                             <td>{{guest.no_of_guests_invited}}</td>
-                            <td id="guest_rsvp">{{guest.rsvp}}</td>
+                            <td class="rsvp_{{guest.rsvp}}">{{guest.rsvp}}</td>
                             <td> Send E-invite </td>
                             <td>Checklist</td>
                         </tr>
@@ -277,12 +277,33 @@
 
     function rsvpstatusfilter() {
         
-        var x = document.getElementById("Yes_checkbox");
-    if (x.style.display === "Yes") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+        var yes = document.getElementById("Yes_checkbox");
+        var no = document.getElementById("No_checkbox");
+        var maybe = document.getElementById("Maybe_checkbox");
+        var unconfirmed = document.getElementById("Unconfirmed_checkbox");
+
+        if (yes.checked == true) {
+            
+            var i;
+            var yes_array = document.getElementsByClassName("rsvp_YES");
+        
+            for (i = 0; i < yes_array.length ; i++ ) {
+                yes_array[i].parentNode.style.display = "block";
+            
+            };
+            
+        } 
+        
+        else {
+            var i;
+            var yes_array = document.getElementsByClassName("rsvp_YES");
+            for (i = 0; i < yes_array.length; i++ ){
+                yes_array[i].parentNode.style.display = "none";
+            };
+        
+        };
+        
+    
     }
   
 </script>
