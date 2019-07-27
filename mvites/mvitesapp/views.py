@@ -136,6 +136,9 @@ def guestbook(request):
     total_responded = guest_count - rsvp_unconfirmed
     rsvp_maybeplusunconfirmed = rsvp_maybe + rsvp_unconfirmed
 
+    attending_list = Guestbook.objects.order_by('no_of_guests_attending').values('no_of_guests_attending').distinct()
+    inviting_list = Guestbook.objects.order_by('no_of_guests_invited').values('no_of_guests_invited').distinct()
+
     bar_totalinvites = str(round(total_responded/guest_count,3)*100) + "%"
     bar_totalresponded = str(round(total_responded/guest_count,3)*100) + "%"
     bar_yes = str(round(rsvp_yes/guest_count,3)*100) + "%"
@@ -165,7 +168,9 @@ def guestbook(request):
         'bar_no' : bar_no,
         'bar_maybe' : bar_maybe,
         'bar_unconfirmed' : bar_unconfirmed,
-        'bar_attending' : bar_attending
+        'bar_attending' : bar_attending,
+        'attending_list' : attending_list,
+        'inviting_list' : inviting_list
 	}
 	
     return render(request,'mvitesapp/guestbook.html',context)

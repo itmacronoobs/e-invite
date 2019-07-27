@@ -7,7 +7,11 @@
         indicators: true
       });
       $('.tabs').tabs();
-      $('.collapsible').collapsible();
+      $('.collapsible').collapsible({
+        accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+      });
+      
+  
       $('select').formSelect();
       $('.datepicker').datepicker();
       autoplay();

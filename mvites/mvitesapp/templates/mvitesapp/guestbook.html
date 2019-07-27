@@ -3,13 +3,14 @@
 {% block content %}  
 
 <div style = "width: 80%" class="center-block">
+
         <div style="margin-left:12px;" class="section">
 
                 <span style="font-family: 'Grand Hotel', cursive;font-size:50px">My GuestBook</span>
                 <br/>
                 <span style="font-size:20px;">Dashboard</span>
             
-            </div>
+        </div>
 
 
 <div class="row"style="height:60vh;z-index:100;">
@@ -134,16 +135,98 @@
 
 </div>
 
+<div style="z-index:90; width:98%"class="centered center-block">
+    <ul class="collapsible">
+        <li>
+            <div class="collapsible-header valign-wrapper">
+
+                <div class = "center-block"><i class="material-icons">find_in_page</i>Filter</div>
+
+            </div>
+
+            <div class="collapsible-body">
+                <div class="row">
+                    <div class="col l2">Group
+                        <div class="divider"></div>
+                        {% for group in group %}
+                            <p>
+                                <label>
+                                  <input id="{{group.name}}_checkbox" class="filled-in" type="checkbox" onclick="groupfilter()" checked="checked" />
+                                  <span>{{group.name}}</span>
+                                </label>
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <div class="col l2">RSVP Status
+                            <div class="divider"></div>
+                            <p>
+                                    <label>
+                                      <input id="Yes_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <span>Yes</span>
+                                    </label>
+                            </p>
+                            <p>
+                                    <label>
+                                      <input id="No_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <span>No</span>
+                                    </label>
+                            </p>
+                            <p>
+                                    <label>
+                                      <input id="Maybe_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <span>Maybe</span>
+                                    </label>
+                            </p>
+                            <p>
+                                    <label>
+                                      <input id="Unconfirmed_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <span>Unconfirmed</span>
+                                    </label>
+                            </p>
+                    </div>
+                    <div class="col l2">No of attendees
+                            <div class="divider"></div>
+                            {% for attending_no in attending_list %}
+                            <p>
+                                <label>
+                                  <input class="filled-in" type="checkbox" />
+                                  <span>{{attending_no.no_of_guests_attending}}</span>
+                                </label>
+                            </p>
+                        {% endfor %}
+                    </div>
+                    <div class="col l2">No of invitees
+                            <div class="divider"></div>
+                            {% for inviting_no in inviting_list %}
+                            <p>
+                                <label>
+                                  <input class="filled-in" type="checkbox" />
+                                  <span>{{inviting_no.no_of_guests_invited}}</span>
+                                </label>
+                            </p>
+                        {% endfor %}
+                        </div>
+                    <div class="col l4 ">
+                                        <div class="input-field valign-wrapper">
+                                          <i class="material-icons prefix">search</i>
+                                          <input type="text" id="autocomplete-input" class="autocomplete">
+                                          <label for="autocomplete-input">Autocomplete</label>
+                                        </div>
+                    </div>
+                </div>
+        </li>
+    </ul>
+</div>
 
 <div style="height:20vh;z-index:90; width:98%"class="centered center-block">
     <ul class="collapsible">
         {% for group in group %}
         {% if group.id == 1 %}
-        <li class="active">
+        <li id="{{group.name}}" class="active">
         {% else %}
-        <li>
+        <li id="{{group.name}}">
         {%endif%}
-            <div class="collapsible-header"><i class="material-icons">filter_drama</i> {{group.name}}: {{group.total}}/{{group.total_invite}}</div>
+            <div class="collapsible-header" ><i class="material-icons">filter_drama</i> {{group.name}}: {{group.total}}/{{group.total_invite}}</div>
             <div class="collapsible-body">
                 <table id="guestdetailsfonts">
                     <thead>
@@ -167,7 +250,7 @@
                             <td>{{guest.contact_number}}</td>
                             <td>{{guest.no_of_guests_attending}}</td>
                             <td>{{guest.no_of_guests_invited}}</td>
-                            <td>{{guest.rsvp}}</td>
+                            <td id="guest_rsvp">{{guest.rsvp}}</td>
                             <td> Send E-invite </td>
                             <td>Checklist</td>
                         </tr>
@@ -183,4 +266,24 @@
 </div>
 
 </div>
+
+<script>
+
+    function groupfilter() {
+        {% for group in group %}
+        var firstgroup = document.getElementById("{{group.name}}_checkbox").checked ? document.getElementById("{{group.name}}").style.display = "block" : document.getElementById("{{group.name}}").style.display = "none";
+        {% endfor %}
+    }
+
+    function rsvpstatusfilter() {
+        
+        var x = document.getElementById("Yes_checkbox");
+    if (x.style.display === "Yes") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+    }
+  
+</script>
 {% endblock %}
