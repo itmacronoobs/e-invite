@@ -285,19 +285,7 @@
                     YES_{{differences.differences}}_array[i].style.display = "table-row";
                 };
             }
-            else if (yes.checked == false && differences_{{differences.differences}}.checked == true){
-            var i;
-                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
-                    YES_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }      
-            else if (yes.checked == false && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
-                    YES_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }     
-            else if (yes.checked == true && differences_{{differences.differences}}.checked == false){
+            else {
             var i;
                 for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
                     YES_{{differences.differences}}_array[i].style.display = "none";
@@ -311,22 +299,11 @@
                     NO_{{differences.differences}}_array[i].style.display = "table-row";
                 };
             }
-            else if (no.checked == false && differences_{{differences.differences}}.checked == true){
+            else {
             var i;
                 for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
                     NO_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }      
-            else if (no.checked == false && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
-                    NO_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }     
-            else if (no.checked == true && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
-                    NO_{{differences.differences}}_array[i].style.display = "none";
+      
              }; 
             }
 
@@ -338,23 +315,12 @@
                     MAYBE_{{differences.differences}}_array[i].style.display = "table-row";
                 };
             }
-            else if (maybe.checked == false && differences_{{differences.differences}}.checked == true){
+            else {
             var i;
                 for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
                     MAYBE_{{differences.differences}}_array[i].style.display = "none";
              }; 
-            }      
-            else if (maybe.checked == false && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
-                    MAYBE_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }     
-            else if (maybe.checked == true && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
-                    MAYBE_{{differences.differences}}_array[i].style.display = "none";
-             }; 
+
             }
 
              // UNCONFIRMED
@@ -365,23 +331,11 @@
                     UNCONFIRMED_{{differences.differences}}_array[i].style.display = "table-row";
                 };
             }
-            else if (unconfirmed.checked == false && differences_{{differences.differences}}.checked == true){
+            else {
             var i;
                 for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
                     UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }      
-            else if (unconfirmed.checked == false && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
-                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
-             }; 
-            }     
-            else if (unconfirmed.checked == true && differences_{{differences.differences}}.checked == false){
-            var i;
-                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
-                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
-             }; 
+                }; 
             }
 
 
