@@ -189,7 +189,7 @@
                             {% for attending_no in attending_list %}
                             <p>
                                 <label>
-                                  <input class="filled-in" type="checkbox" />
+                                  <input id="{{attending_no.no_of_guests_attending}}_checkbox" class="filled-in" type="checkbox" onclick="attendingfilter()" checked="checked" />
                                   <span>{{attending_no.no_of_guests_attending}}</span>
                                 </label>
                             </p>
@@ -244,11 +244,11 @@
                     <tbody>
                     {% for guest in guestbook %}
                     {% if guest.group == group %}
-                        <tr id="guestdetailsfonts">
+                        <tr id="guestdetailsfonts" class="tr_attending_no_{{guest.no_of_guests_attending}}_"  style="display: table-row;">
                             <td>{{guest.name}}</td>
                             <td>{{guest.email}}</td>
                             <td>{{guest.contact_number}}</td>
-                            <td>{{guest.no_of_guests_attending}}</td>
+                            <td class = "attending_no_{{guest.no_of_guests_attending}}">{{guest.no_of_guests_attending}}</td>
                             <td>{{guest.no_of_guests_invited}}</td>
                             <td class="rsvp_{{guest.rsvp}}">{{guest.rsvp}}</td>
                             <td> Send E-invite </td>
@@ -281,14 +281,14 @@
         var no = document.getElementById("No_checkbox");
         var maybe = document.getElementById("Maybe_checkbox");
         var unconfirmed = document.getElementById("Unconfirmed_checkbox");
-
+        
         if (yes.checked == true) {
             
             var i;
             var yes_array = document.getElementsByClassName("rsvp_YES");
         
             for (i = 0; i < yes_array.length ; i++ ) {
-                yes_array[i].parentNode.style.display = "block";
+                yes_array[i].parentNode.style.display = "table-row";
             
             };
             
@@ -303,8 +303,106 @@
         
         };
         
-    
+        if (no.checked == true) {
+            
+            var i;
+            var no_array = document.getElementsByClassName("rsvp_NO");
+        
+            for (i = 0; i < no_array.length ; i++ ) {
+                no_array[i].parentNode.style.display = "table-row";
+            
+            };
+            
+        } 
+        
+        else {
+            var i;
+            var no_array = document.getElementsByClassName("rsvp_NO");
+            for (i = 0; i < no_array.length; i++ ){
+                no_array[i].parentNode.style.display = "none";
+            };
+        
+        };
+        
+        if (maybe.checked == true) {
+            
+            var i;
+            var maybe_array = document.getElementsByClassName("rsvp_MAYBE");
+        
+            for (i = 0; i < maybe_array.length ; i++ ) {
+                maybe_array[i].parentNode.style.display = "table-row";
+            
+            };
+            
+        } 
+        
+        else {
+            var i;
+            var maybe_array = document.getElementsByClassName("rsvp_MAYBE");
+            for (i = 0; i < maybe_array.length; i++ ){
+                maybe_array[i].parentNode.style.display = "none";
+            };
+        
+        };
+        
+        if (unconfirmed.checked == true) {
+            
+            var i;
+            var unconfirmed_array = document.getElementsByClassName("rsvp_UNCONFIRMED");
+        
+            for (i = 0; i < unconfirmed_array.length ; i++ ) {
+               unconfirmed_array[i].parentNode.style.display = "table-row";
+            
+            };
+            
+        } 
+        
+        else {
+            var i;
+            var unconfirmed_array = document.getElementsByClassName("rsvp_UNCONFIRMED");
+            for (i = 0; i < unconfirmed_array.length; i++ ){
+                unconfirmed_array[i].parentNode.style.display = "none";
+            };
+        
+        };
+        
     }
+        function attendingfilter() {
+        
+        {% for attending_no in attending_list %}
+        
+        var attending_no_{{attending_no.no_of_guests_attending}} = document.getElementById("{{attending_no.no_of_guests_attending}}_checkbox");
+
+        if (attending_no_{{attending_no.no_of_guests_attending}}.checked == true){
+
+            var i;
+            var attending_no_{{attending_no.no_of_guests_attending}}_array = document.getElementsByClassName("attending_no_{{attending_no.no_of_guests_attending}}");
+
+            for (i = 0; i < attending_no_{{attending_no.no_of_guests_attending}}_array.length; i++){
+                            
+                attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display == "none" ? attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "none": attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "table-row";
+
+            };
+        }
+
+            else {
+            
+            var i;
+
+            var attending_no_{{attending_no.no_of_guests_attending}}_array = document.getElementsByClassName("attending_no_{{attending_no.no_of_guests_attending}}");
+            for (i = 0; i<attending_no_{{attending_no.no_of_guests_attending}}_array.length; i++){
+
+                attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display == "table-row" ? attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "none": attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "table-row";
+
+            };
+
+        };
+
+        {% endfor %}
+
+
+        }   
+
   
 </script>
 {% endblock %}
