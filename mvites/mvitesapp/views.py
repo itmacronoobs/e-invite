@@ -4,7 +4,7 @@ from .models import Customer, Group, Itinerary, Wish, Guestbook, Rsvp
 from .forms import UploadFileForm
 import xlrd
 from django.http import HttpResponseRedirect
-from django.db.models import Avg, Count, Min, Sum
+from django.db.models import Avg, Count, Min, Sum, F
 
 # Create your views here.
 def index(request): 
@@ -122,7 +122,7 @@ def excel(request):
 def guestbook(request): 
     group = Group.objects.all().annotate(total = Sum('guestbook__no_of_guests_attending'),total_invite = Sum('guestbook__no_of_guests_invited'))
     customer = Customer.objects.all().order_by('-id')
-    guestbook = Guestbook.objects.all().order_by('-id')
+    guestbook = Guestbook.objects.all().order_by('-id').annotate(differences = F('no_of_guests_invited')- F ('no_of_guests_attending'))
     guest_count = Guestbook.objects.all().count()
     guest_attending1 = list(Guestbook.objects.aggregate(total = Sum('no_of_guests_attending')).values())[0]
     guest_invited1 = list(Guestbook.objects.aggregate(total = Sum('no_of_guests_invited')).values())[0]
@@ -136,9 +136,8 @@ def guestbook(request):
     total_responded = guest_count - rsvp_unconfirmed
     rsvp_maybeplusunconfirmed = rsvp_maybe + rsvp_unconfirmed
 
-    attending_list = Guestbook.objects.order_by('no_of_guests_attending').values('no_of_guests_attending').distinct()
-    inviting_list = Guestbook.objects.order_by('no_of_guests_invited').values('no_of_guests_invited').distinct()
-
+    differences_list = guestbook.order_by('differences').values('differences').distinct()
+    
     bar_totalinvites = str(round(total_responded/guest_count,3)*100) + "%"
     bar_totalresponded = str(round(total_responded/guest_count,3)*100) + "%"
     bar_yes = str(round(rsvp_yes/guest_count,3)*100) + "%"
@@ -169,8 +168,7 @@ def guestbook(request):
         'bar_maybe' : bar_maybe,
         'bar_unconfirmed' : bar_unconfirmed,
         'bar_attending' : bar_attending,
-        'attending_list' : attending_list,
-        'inviting_list' : inviting_list
+        'differences_list' : differences_list,
 	}
 	
     return render(request,'mvitesapp/guestbook.html',context)

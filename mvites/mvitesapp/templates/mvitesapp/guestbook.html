@@ -161,51 +161,40 @@
                             <div class="divider"></div>
                             <p>
                                     <label>
-                                      <input id="Yes_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <input id="Yes_checkbox" class="filled-in" type="checkbox" onclick="trfilter()" checked="checked" />
                                       <span>Yes</span>
                                     </label>
                             </p>
                             <p>
                                     <label>
-                                      <input id="No_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <input id="No_checkbox" class="filled-in" type="checkbox" onclick="trfilter()" checked="checked" />
                                       <span>No</span>
                                     </label>
                             </p>
                             <p>
                                     <label>
-                                      <input id="Maybe_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <input id="Maybe_checkbox" class="filled-in" type="checkbox" onclick="trfilter()" checked="checked" />
                                       <span>Maybe</span>
                                     </label>
                             </p>
                             <p>
                                     <label>
-                                      <input id="Unconfirmed_checkbox" class="filled-in" type="checkbox" onclick="rsvpstatusfilter()" checked="checked" />
+                                      <input id="Unconfirmed_checkbox" class="filled-in" type="checkbox" onclick="trfilter()" checked="checked" />
                                       <span>Unconfirmed</span>
                                     </label>
                             </p>
                     </div>
-                    <div class="col l2">No of attendees
+                    <div class="col l2">Differences
                             <div class="divider"></div>
-                            {% for attending_no in attending_list %}
+                            {% for differences in differences_list %}
                             <p>
                                 <label>
-                                  <input id="{{attending_no.no_of_guests_attending}}_checkbox" class="filled-in" type="checkbox" onclick="attendingfilter()" checked="checked" />
-                                  <span>{{attending_no.no_of_guests_attending}}</span>
+                                  <input id="{{differences.differences}}_checkbox" class="filled-in" type="checkbox" onclick="trfilter()" checked="checked" />
+                                  <span>{{differences.differences}}</span>
                                 </label>
                             </p>
                         {% endfor %}
                     </div>
-                    <div class="col l2">No of invitees
-                            <div class="divider"></div>
-                            {% for inviting_no in inviting_list %}
-                            <p>
-                                <label>
-                                  <input class="filled-in" type="checkbox" />
-                                  <span>{{inviting_no.no_of_guests_invited}}</span>
-                                </label>
-                            </p>
-                        {% endfor %}
-                        </div>
                     <div class="col l4 ">
                                         <div class="input-field valign-wrapper">
                                           <i class="material-icons prefix">search</i>
@@ -236,6 +225,7 @@
                         <th>Contact number</th>
                         <th>No. of Attendees</th>
                         <th>No. of Invites given</th>
+                        <th>Difference</th>
                         <th>RSVP status</th>
                         <th>Send E-invite</th>
                         <th>Checklist</th>
@@ -244,13 +234,14 @@
                     <tbody>
                     {% for guest in guestbook %}
                     {% if guest.group == group %}
-                        <tr id="guestdetailsfonts" class="tr_attending_no_{{guest.no_of_guests_attending}}_"  style="display: table-row;">
+                        <tr id="guestdetailsfonts" class="{{guest.rsvp}}_{{guest.differences}}"  style="display: table-row;">
                             <td>{{guest.name}}</td>
                             <td>{{guest.email}}</td>
                             <td>{{guest.contact_number}}</td>
-                            <td class = "attending_no_{{guest.no_of_guests_attending}}">{{guest.no_of_guests_attending}}</td>
+                            <td>{{guest.no_of_guests_attending}}</td>
                             <td>{{guest.no_of_guests_invited}}</td>
-                            <td class="rsvp_{{guest.rsvp}}">{{guest.rsvp}}</td>
+                            <td>{{guest.differences}}</td>
+                            <td>{{guest.rsvp}}</td>
                             <td> Send E-invite </td>
                             <td>Checklist</td>
                         </tr>
@@ -275,133 +266,127 @@
         {% endfor %}
     }
 
-    function rsvpstatusfilter() {
-        
-        var yes = document.getElementById("Yes_checkbox");
-        var no = document.getElementById("No_checkbox");
-        var maybe = document.getElementById("Maybe_checkbox");
-        var unconfirmed = document.getElementById("Unconfirmed_checkbox");
-        
-        if (yes.checked == true) {
-            
+    function trfilter() {
+        {% for differences in differences_list %}
+           
+            var yes = document.getElementById('Yes_checkbox');
+            var no = document.getElementById('No_checkbox');
+            var maybe = document.getElementById('Maybe_checkbox'); 
+            var unconfirmed = document.getElementById('Unconfirmed_checkbox'); 
+            var differences_{{differences.differences}} = document.getElementById('{{differences.differences}}_checkbox'); 
+            var YES_{{differences.differences}}_array = document.getElementsByClassName("YES_{{differences.differences}}");
+            var NO_{{differences.differences}}_array = document.getElementsByClassName("NO_{{differences.differences}}");
+            var MAYBE_{{differences.differences}}_array = document.getElementsByClassName("MAYBE_{{differences.differences}}");
+            var UNCONFIRMED_{{differences.differences}}_array = document.getElementsByClassName("UNCONFIRMED_{{differences.differences}}");
+
+            if (yes.checked == true && differences_{{differences.differences}}.checked == true ){
+                var i;
+                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
+                    YES_{{differences.differences}}_array[i].style.display = "table-row";
+                };
+            }
+            else if (yes.checked == false && differences_{{differences.differences}}.checked == true){
             var i;
-            var yes_array = document.getElementsByClassName("rsvp_YES");
-        
-            for (i = 0; i < yes_array.length ; i++ ) {
-                yes_array[i].parentNode.style.display = "table-row";
-            
-            };
-            
-        } 
-        
-        else {
+                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
+                    YES_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }      
+            else if (yes.checked == false && differences_{{differences.differences}}.checked == false){
             var i;
-            var yes_array = document.getElementsByClassName("rsvp_YES");
-            for (i = 0; i < yes_array.length; i++ ){
-                yes_array[i].parentNode.style.display = "none";
-            };
-        
-        };
-        
-        if (no.checked == true) {
-            
+                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
+                    YES_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }     
+            else if (yes.checked == true && differences_{{differences.differences}}.checked == false){
             var i;
-            var no_array = document.getElementsByClassName("rsvp_NO");
-        
-            for (i = 0; i < no_array.length ; i++ ) {
-                no_array[i].parentNode.style.display = "table-row";
-            
-            };
-            
-        } 
-        
-        else {
+                for (i = 0; i < YES_{{differences.differences}}_array.length; i++){
+                    YES_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }
+            // no
+
+            if (no.checked == true && differences_{{differences.differences}}.checked == true ){
+                var i;
+                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
+                    NO_{{differences.differences}}_array[i].style.display = "table-row";
+                };
+            }
+            else if (no.checked == false && differences_{{differences.differences}}.checked == true){
             var i;
-            var no_array = document.getElementsByClassName("rsvp_NO");
-            for (i = 0; i < no_array.length; i++ ){
-                no_array[i].parentNode.style.display = "none";
-            };
-        
-        };
-        
-        if (maybe.checked == true) {
-            
+                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
+                    NO_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }      
+            else if (no.checked == false && differences_{{differences.differences}}.checked == false){
             var i;
-            var maybe_array = document.getElementsByClassName("rsvp_MAYBE");
-        
-            for (i = 0; i < maybe_array.length ; i++ ) {
-                maybe_array[i].parentNode.style.display = "table-row";
-            
-            };
-            
-        } 
-        
-        else {
+                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
+                    NO_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }     
+            else if (no.checked == true && differences_{{differences.differences}}.checked == false){
             var i;
-            var maybe_array = document.getElementsByClassName("rsvp_MAYBE");
-            for (i = 0; i < maybe_array.length; i++ ){
-                maybe_array[i].parentNode.style.display = "none";
-            };
-        
-        };
-        
-        if (unconfirmed.checked == true) {
-            
+                for (i = 0; i < NO_{{differences.differences}}_array.length; i++){
+                    NO_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }
+
+             // MAYBE
+
+             if (maybe.checked == true && differences_{{differences.differences}}.checked == true ){
+                var i;
+                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
+                    MAYBE_{{differences.differences}}_array[i].style.display = "table-row";
+                };
+            }
+            else if (maybe.checked == false && differences_{{differences.differences}}.checked == true){
             var i;
-            var unconfirmed_array = document.getElementsByClassName("rsvp_UNCONFIRMED");
-        
-            for (i = 0; i < unconfirmed_array.length ; i++ ) {
-               unconfirmed_array[i].parentNode.style.display = "table-row";
-            
-            };
-            
-        } 
-        
-        else {
+                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
+                    MAYBE_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }      
+            else if (maybe.checked == false && differences_{{differences.differences}}.checked == false){
             var i;
-            var unconfirmed_array = document.getElementsByClassName("rsvp_UNCONFIRMED");
-            for (i = 0; i < unconfirmed_array.length; i++ ){
-                unconfirmed_array[i].parentNode.style.display = "none";
-            };
-        
-        };
-        
+                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
+                    MAYBE_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }     
+            else if (maybe.checked == true && differences_{{differences.differences}}.checked == false){
+            var i;
+                for (i = 0; i < MAYBE_{{differences.differences}}_array.length; i++){
+                    MAYBE_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }
+
+             // UNCONFIRMED
+
+             if (unconfirmed.checked == true && differences_{{differences.differences}}.checked == true ){
+                var i;
+                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
+                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "table-row";
+                };
+            }
+            else if (unconfirmed.checked == false && differences_{{differences.differences}}.checked == true){
+            var i;
+                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
+                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }      
+            else if (unconfirmed.checked == false && differences_{{differences.differences}}.checked == false){
+            var i;
+                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
+                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }     
+            else if (unconfirmed.checked == true && differences_{{differences.differences}}.checked == false){
+            var i;
+                for (i = 0; i < UNCONFIRMED_{{differences.differences}}_array.length; i++){
+                    UNCONFIRMED_{{differences.differences}}_array[i].style.display = "none";
+             }; 
+            }
+
+
+        {% endfor %}        
     }
-        function attendingfilter() {
-        
-        {% for attending_no in attending_list %}
-        
-        var attending_no_{{attending_no.no_of_guests_attending}} = document.getElementById("{{attending_no.no_of_guests_attending}}_checkbox");
-
-        if (attending_no_{{attending_no.no_of_guests_attending}}.checked == true){
-
-            var i;
-            var attending_no_{{attending_no.no_of_guests_attending}}_array = document.getElementsByClassName("attending_no_{{attending_no.no_of_guests_attending}}");
-
-            for (i = 0; i < attending_no_{{attending_no.no_of_guests_attending}}_array.length; i++){
-                            
-                attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display == "none" ? attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "none": attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "table-row";
-
-            };
-        }
-
-            else {
-            
-            var i;
-
-            var attending_no_{{attending_no.no_of_guests_attending}}_array = document.getElementsByClassName("attending_no_{{attending_no.no_of_guests_attending}}");
-            for (i = 0; i<attending_no_{{attending_no.no_of_guests_attending}}_array.length; i++){
-
-                attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display == "table-row" ? attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "none": attending_no_{{attending_no.no_of_guests_attending}}_array[i].parentNode.style.display = "table-row";
-
-            };
-
-        };
-
-        {% endfor %}
-
-
-        }   
 
   
 </script>
