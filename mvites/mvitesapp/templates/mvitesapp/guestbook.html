@@ -195,11 +195,11 @@
                             </p>
                         {% endfor %}
                     </div>
-                    <div class="col l4 ">
+                    <div class="col l6 ">
                                         <div class="input-field valign-wrapper">
                                           <i class="material-icons prefix">search</i>
-                                          <input type="text" id="autocomplete-input" class="autocomplete">
-                                          <label for="autocomplete-input">Autocomplete</label>
+                                          <input type="text" id="autocomplete-input" onchange="guestfilter()" onclick="resetfilters()" class="autocomplete">
+                                          <label for="autocomplete-input">Find a guest</label>
                                         </div>
                     </div>
                 </div>
@@ -267,6 +267,7 @@
     }
 
     function trfilter() {
+        document.getElementById('autocomplete-input').value = "";
         {% for differences in differences_list %}
            
             var yes = document.getElementById('Yes_checkbox');
@@ -339,8 +340,24 @@
             }
 
 
-        {% endfor %}        
+        {% endfor %}      
+          
     }
+
+        function resetfilters() {
+            document.getElementById('Yes_checkbox').checked = true;
+            document.getElementById('No_checkbox').checked = true;
+            document.getElementById('Maybe_checkbox').checked = true;
+            document.getElementById('Unconfirmed_checkbox').checked = true;
+            
+            {% for differences in differences_list %}
+            document.getElementById('{{differences.differences}}_checkbox').checked = true;
+            {% endfor %}
+
+            trfilter();
+        }
+
+
 
   
 </script>
